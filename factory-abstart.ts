@@ -71,22 +71,43 @@ class PaymentFactory {
     }
 }
 
-class Bootstrap {
-    public pay(amount: number) {
-        const upiPay = PaymentFactory.payementMode('upi');
-        upiPay.payementMode('gpay');
-        upiPay.pay(500);
+// class Bootstrap {
+//     public pay(amount: number) {
+//         const upiPay = PaymentFactory.payementMode('upi');
+//         upiPay.payementMode('gpay');
+//         upiPay.pay(500);
 
-        const cardPay = PaymentFactory.payementMode('card');
-        cardPay.enterCardDetails({
-            name: 'abc',
-            cvv: 123,
-            expiryDate: '02/33',
-            cardNumber: '4588 5588 5555 5555',
-        });
-        cardPay.pay(5000);
-    }
+//         const cardPay = PaymentFactory.payementMode('card');
+//         cardPay.enterCardDetails({
+//             name: 'abc',
+//             cvv: 123,
+//             expiryDate: '02/33',
+//             cardNumber: '4588 5588 5555 5555',
+//         });
+//         cardPay.pay(5000);
+//     }
+// }
+
+// const app = new Bootstrap();
+// app.pay(5000);
+
+
+function payViaCard(amount, cardDetails) {
+    const pay = PaymentFactory.payementMode('card');
+    pay.enterCardDetails(cardDetails);
+    pay.pay(amount);
 }
 
-const app = new Bootstrap();
-app.pay(5000);
+function payViaUpi(amount) {
+    const pay = PaymentFactory.payementMode('upi');
+    pay.pay(amount);
+}
+
+payViaCard(5000, {
+    name: 'abc',
+    cvv: 123,
+    expiryDate: '02/33',
+    cardNumber: '4588 5588 5555 5555',
+});
+
+payViaUpi(50);
